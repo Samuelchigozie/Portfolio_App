@@ -1,92 +1,172 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'about.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: {
+        '/about': (context) => AboutPage(), // Define AboutPage route
+      },
+      home: ProfileApp(),
+    ));
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  static const String _title = 'Flutter Stateful Clicker Counter';
-  // This widget is the root of your application.
+class ProfileApp extends StatefulWidget {
+  const ProfileApp({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      theme: ThemeData(
-        // useMaterial3: false,
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
+  State<ProfileApp> createState() => _ProfileAppState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-  // This class is the configuration for the state.
+class _ProfileAppState extends State<ProfileApp> {
+  late double coverHeight;
+  late double profileHeight;
+  late double top;
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  void initState() {
+    super.initState();
+    coverHeight = 280;
+    profileHeight = 144;
+    top = coverHeight - profileHeight / 2;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: const Text('Flutter Demo Click Counter'),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: const TextStyle(fontSize: 25),
-            ),
-          ],
+      body: Directionality(
+        textDirection: TextDirection.ltr, // Set text direction as needed
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              buildTop(),
+              buildAbout(),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+    );
+  }
+
+  Widget buildTop() {
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+        buildCoverImage(),
+        Positioned(
+          top: top,
+          child: profileImage(),
+        ),
+        Positioned(
+          top: coverHeight + profileHeight / 2,
+          left: 16.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Samuel Chigozie',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 4.0),
+              Row(
+                children: [
+                  Icon(Icons.people),
+                  SizedBox(width: 4.0),
+                  Text('Followers: 100'),
+                  SizedBox(width: 12.0),
+                  Icon(Icons.people_outline),
+                  SizedBox(width: 4.0),
+                  Text('Following: 50'),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildAbout() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 140, 16, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'About',
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            'Fullstack developer passionate about Flutter. Excited to share my knowledge and learn from others.',
+            style: TextStyle(fontSize: 16.0),
+          ),
+          SizedBox(height: 16.0),
+          Text(
+            'Connect with me:',
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 8.0),
+          Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.facebook),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: FaIcon(FontAwesomeIcons.twitter), // Twitter icon
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: FaIcon(FontAwesomeIcons.linkedin), // LinkedIn icon
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: FaIcon(FontAwesomeIcons.github), // GitHub icon
+                onPressed: () {},
+              ),
+              SizedBox(
+                  width:
+                      100), // Add a margin between the icons and the floating button
+              FloatingActionButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/about');
+                },
+                child: Icon(Icons.info),
+                backgroundColor:
+                    Colors.blue, // Customize button color as needed
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
+
+  Widget buildCoverImage() => Container(
+        color: Colors.grey,
+        child: Image.network(
+          'https://static.vecteezy.com/system/resources/thumbnails/002/949/141/small/programming-code-coding-or-hacker-background-vector.jpg',
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,
+        ),
+      );
+
+  Widget profileImage() => CircleAvatar(
+        radius: profileHeight / 2,
+        backgroundColor: Colors.grey.shade800,
+        backgroundImage: NetworkImage(
+            'https://avatars.githubusercontent.com/u/59323050?v=4'),
+      );
 }
