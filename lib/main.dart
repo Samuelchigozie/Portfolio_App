@@ -156,7 +156,7 @@ class _ProfileAppState extends State<ProfileApp> {
   Widget buildCoverImage() => Container(
         color: Colors.grey,
         child: Image.asset(
-          'assets/images/profilebg.jpg',
+          'assets/profilebg.jpg',
           width: double.infinity,
           height: coverHeight,
           fit: BoxFit.cover,
@@ -166,6 +166,6 @@ class _ProfileAppState extends State<ProfileApp> {
   Widget profileImage() => CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: Colors.grey.shade800,
-        backgroundImage: AssetImage('assets/images/profilepic.jpg'),
+        backgroundImage: AssetImage('assets/profilepic.jpg'),
       );
 }
