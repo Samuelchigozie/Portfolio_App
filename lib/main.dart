@@ -155,8 +155,8 @@ class _ProfileAppState extends State<ProfileApp> {
 
   Widget buildCoverImage() => Container(
         color: Colors.grey,
-        child: Image.network(
-          'https://static.vecteezy.com/system/resources/thumbnails/002/949/141/small/programming-code-coding-or-hacker-background-vector.jpg',
+        child: Image.asset(
+          'assets/images/profilebg.jpg',
           width: double.infinity,
           height: coverHeight,
           fit: BoxFit.cover,
@@ -166,7 +166,6 @@ class _ProfileAppState extends State<ProfileApp> {
   Widget profileImage() => CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: Colors.grey.shade800,
-        backgroundImage: NetworkImage(
-            'https://avatars.githubusercontent.com/u/59323050?v=4'),
+        backgroundImage: AssetImage('assets/images/profilepic.jpg'),
       );
 }
